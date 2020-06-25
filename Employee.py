@@ -26,6 +26,18 @@ class Employee:
         first,last,pay=empString.split("-")
         return cls(first,last,float(pay))
 
+    #special (dunder) methods
+    def __repr__(self):
+        return "Employee('{}','{}',{})".format(self.fullname(),self.email,self.pay)
+    def __str__(self):
+        return "{} - {}".format(self.fullname(),self.email)
+    def __add__(self,other):
+        return self.pay + other.pay
+    def __eq__(self,other):
+        return self.pay==other.pay
+    def __len__(self):
+        return len(self.fullname())    
+
 #Developer and Manager classes are inheriting from class Employee
 class Developer(Employee):
     raise_amount=1.10
@@ -33,6 +45,17 @@ class Developer(Employee):
     def __init__(self,first,last,pay,prog_lang):
         super().__init__(first,last,pay)
         self.prog_lang=prog_lang
+    
+    def __repr__(self):
+        return "Developer('{}','{}',{},'{}')".format(self.fullname(),self.email,self.pay,self.prog_lang)
+    def __str__(self):
+        return "{} - {} - {}".format(self.fullname(),self.email,self.prog_lang)
+    def __add__(self,other):
+        return self.pay + other.pay
+    def __eq__(self,other):
+        return self.pay==other.pay
+    def __len__(self):
+        return len(self.fullname())
     
 class Manager(Employee):
     raise_amount=1.15
@@ -54,22 +77,35 @@ class Manager(Employee):
         for emp in self.employees:
             print("-->",emp.fullname())
 
+    def __repr__(self):
+        return "Manager('{}','{}',{})".format(self.fullname(),self.email,self.pay)
+    def __str__(self):
+        return "{} - {}".format(self.fullname(),self.email)
+    def __add__(self,other):
+        return self.pay + other.pay
+    def __eq__(self,other):
+        return self.pay==other.pay
+    def __len__(self):
+        return len(self.employees)
+
 
 dev1=Developer("John","Doe",85000,"Python")
 dev2=Developer("Jane","Doe",85000,"Java")
 
-print(dev1.email)
-print(dev1.prog_lang)
-print(dev2.email)
-print(dev2.prog_lang)
+print(dev1)
+print(dev2)
+print(dev1==dev2)
+dev2.apply_raise()
+print(dev1==dev2)
+print(dev1 + dev2)
+print(len(dev1))
 
 mgr=Manager("Pavitra","Prabhakar",95000,[dev1])
+print(repr(mgr))
 mgr.list_employees()
 mgr.add_employee(dev2)
 mgr.list_employees()
+print(len(mgr))
 
-print(mgr.pay)
-mgr.apply_raise()
-print(mgr.pay)
 
 
