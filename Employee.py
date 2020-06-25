@@ -6,10 +6,13 @@ class Employee:
     def __init__(self, first,last,pay):
         self.first=first
         self.last=last
-        self.email="{}.{}@gmail.com".format(first,last)
         self.pay=pay
 
         Employee.no_of_emps+=1
+
+    @property
+    def email(self):    #uses the method as an attribute
+        return "{}.{}@gmail.com".format(self.first,self.last)
 
     def fullname(self):
         return "{} {}".format(self.first,self.last)
@@ -46,6 +49,10 @@ class Developer(Employee):
         super().__init__(first,last,pay)
         self.prog_lang=prog_lang
     
+    @property
+    def email(self):
+        return "{}.{}@gmail.com".format(self.first,self.last)
+
     def __repr__(self):
         return "Developer('{}','{}',{},'{}')".format(self.fullname(),self.email,self.pay,self.prog_lang)
     def __str__(self):
@@ -66,6 +73,10 @@ class Manager(Employee):
             self.employees=[]
         else:
             self.employees=employees
+    
+    @property
+    def email(self):
+        return "{}.{}@gmail.com".format(self.first,self.last)
     
     def add_employee(self,emp):
         if emp not in self.employees:
