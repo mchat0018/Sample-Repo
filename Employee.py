@@ -26,25 +26,50 @@ class Employee:
         first,last,pay=empString.split("-")
         return cls(first,last,float(pay))
 
+#Developer and Manager classes are inheriting from class Employee
+class Developer(Employee):
+    raise_amount=1.10
 
-#initializing the class instances
-emp1=Employee("Ramesh","Nanavati",75000)
-emp2=Employee("Raghav","Shukla",70000)
+    def __init__(self,first,last,pay,prog_lang):
+        super().__init__(first,last,pay)
+        self.prog_lang=prog_lang
+    
+class Manager(Employee):
+    raise_amount=1.15
 
-#using the alternate constructors made by a class method
-emp3=Employee.init_from_String("John-Doe-60000")
-emp4=Employee.init_from_String("Jane-Doe-60000")
+    def __init__(self,first,last,pay,employees=None):
+        super().__init__(first,last,pay)
+        if employees==None:
+            self.employees=[]
+        else:
+            self.employees=employees
+    
+    def add_employee(self,emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+    def rem_employee(self,emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+    def list_employees(self):
+        for emp in self.employees:
+            print("-->",emp.fullname())
 
-#2 ways of calling class methods
-print(emp1.fullname())
-print(Employee.fullname(emp2))
 
-print(emp1.email)   #outputting the attribute of the instance
-print(emp3.email)
+dev1=Developer("John","Doe",85000,"Python")
+dev2=Developer("Jane","Doe",85000,"Java")
 
-#modify raise using class method
-Employee.set_raise_amt(1.05)
-emp2.apply_raise()
-emp4.apply_raise()
-print(emp2.pay)
-print(emp4.pay)
+print(dev1.email)
+print(dev1.prog_lang)
+print(dev2.email)
+print(dev2.prog_lang)
+
+mgr=Manager("Pavitra","Prabhakar",95000,[dev1])
+mgr.list_employees()
+mgr.add_employee(dev2)
+mgr.list_employees()
+
+print(mgr.pay)
+mgr.apply_raise()
+print(mgr.pay)
+
+
